@@ -1,27 +1,44 @@
-# Counting Zoo 🦁🐯🐘
+# ThresholdEd
+Certified Elementary Teacher (K-6) applying 8+ years of field research, data collection and observation, planning and design, ESOL, and ESE experience.
+# 🦁 ThresholdEd
+### *Bridging the Gap Between Curiosity and Capability*
 
-### Supporting, Not Sorting: Foundations for Confidence.
-
-## 📖 The Mission
-As a licensed educator with a Master’s in Pedagogy and experience across public, private, charter, and international schools, I have witnessed a recurring trend: children are often pushed forward into abstract concepts before their foundational skills are solid. 
-
-When we sort children strictly by grade level rather than supporting their individual mastery, we don't just miss a skill—we diminish their confidence. **Counting Zoo** is designed to bring learning "Back to Basics," ensuring every child builds the unshakeable foundation needed for higher-level abstract thinking.
-
-## 🎯 Educational Focus: MA.K.NSO.1.1
-This app is specifically built to address **Florida B.E.S.T. Standard MA.K.NSO.1.1** (Number Sense and Operations):
-- **1-to-1 Correspondence:** Developing accurate counting of up to 20 objects.
-- **Rearrangement Recognition:** Encouraging students to state the number of objects in a group after rearrangement without needing to recount.
-- **Subitizing:** Organizing objects into static groups (2, 3, and 5) to foster composite thinking.
-- **Numeral Representation:** Reinforcing number formation through simple, accessible tracing (vertical 1s, hook-free 5s).
-
-## ✨ Features
-- **Teacher-Led Design:** Every element—from the 5-second cognitive processing pause to the high-contrast "Anti-Overlap" dot logic—is rooted in pedagogical research.
-- **Accessibility First:** Minimalist numeral formation guides children toward correct top-to-bottom writing habits without the confusion of decorative serifs or "tails."
-- **Privacy by Design:** This app collects **zero user data**. It is an offline-first tool designed to be safe for any classroom or home environment.
-- **Adaptive Sizing:** Objects dynamically scale to ensure clarity and success for emerging fine motor skills.
-
-## 🚀 Vision
-ThresholdEd believes that we must stop treating children as a "one-size-fits-all" cohort. By providing the tools for foundational mastery, we empower children with the confidence to tackle harder problems and grow at their own pace.
+Objective: Merge my Applied Artificial Intelligence A.S. studies with my teaching experience to create online tools to engage students, parents, and teachers. A long-term goal is to provide instant data collection and automated reports for administrators, teachers, parents, and support staff.
+**Colleen Gildea** *Certified Elementary Teacher (K-6) | Applied AI Specialist (A.S. Candidate)*
 
 ---
-*Created by a Teacher, for the Teachers and Parents of the next generation.*
+
+## 🚀 Objective
+To merge **8+ years of field research** in Title I, ESE, and ESOL classrooms with **Applied Artificial Intelligence** to create adaptive tools that engage students, empower parents, and streamline data for educators. 
+
+My mission is to replace "Red Tape" with **Instant Data Collection** and **Automated Scaffolding**, allowing administrators and support staff to see real-time student growth without the lag of standardized testing.
+
+---
+
+## 🧠 The Philosophy: The Mind as a Computational Resource
+
+Are standardized tests capturing the actual capability of our children? I believe we can do better by optimizing the **Zone of Proximal Development (ZPD)**.
+
+### **The Algorithmic Bandwidth**
+I am developing an adaptive system designed to convert the ZPD into a dynamic, algorithmic bandwidth. The goal is to keep every student at their **individual upper boundary**—the "Sweet Spot" where learning is most intense but success is still achievable.
+
+[Image of Vygotsky's Zone of Proximal Development diagram]
+
+### **Core Pillars of ThresholdEd:**
+* **AI-Automated Scaffolding:** Reducing mental load to encourage **Automatization**. By locking foundational concepts into long-term memory, we free up cognitive processing capacity for higher-order thinking.
+* **Intermittent Reinforcement:** Utilizing unpredictable progress bars and targeted assistance to maintain student engagement and grit.
+* **Dynamic Progress:** Recognizing that the ZPD is not static; it shifts based on the task, linguistic context, and emotional state.
+* **Building Self-Efficacy:** My system is designed to sustain student confidence. When a child operates at their true upper level, they don't just learn—they believe they *can* learn.
+
+---
+
+## 🛠️ Tech Stack & Education
+* **Specializations:** Title I Education, ESOL, ESE, STEM.
+* **Current Studies:** Applied Artificial Intelligence (Palm Beach State College).
+* **Vision:** Transitioning from "Screen-Heavy" babysitting to **Tech-Enabled Human Interaction.**
+
+---
+
+### 📬 Connect with my Work
+* 📝 **Read my Research:** [ThresholdEd on beehiiv](https://thresholded.beehiiv.com)
+* 💻 **Current Project:** [Counting Zoo - Kindergarten Math Foundation](https://cgildea15.github.io/counting-zoo/)
