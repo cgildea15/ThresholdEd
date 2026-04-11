@@ -34,17 +34,16 @@
             font-weight: 700;
         }
 
-        /* TALL BOX FOR MOBILE SPACE */
         .card-container {
             width: 95%;
             max-width: 450px;
-            aspect-ratio: 3 / 4; /* Flipped Vertically */
+            aspect-ratio: 3 / 4;
             position: relative;
             background: white;
             border: 8px solid #3b82f6;
             border-radius: 30px;
             display: flex;
-            flex-direction: column; /* Stack vertically during split */
+            flex-direction: column;
             overflow: hidden;
         }
 
@@ -57,13 +56,13 @@
         }
 
         #trace-area {
-            flex: 1;
+            flex: 1.5; /* More space for tracing */
             display: none; 
             position: relative;
             background: #ffffff;
             align-items: center;
             justify-content: center;
-            border-top: 3px dashed #cbd5e1;
+            border-top: 4px dashed #cbd5e1;
         }
 
         .dot {
@@ -78,13 +77,15 @@
 
         #trace-canvas { position: absolute; top: 0; left: 0; z-index: 25; }
 
+        /* THE CLEANEST NUMERALS POSSIBLE */
         .trace-prompt {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 200px;
+            font-family: Arial, Helvetica, sans-serif; /* Cleanest system font for 1 and 5 */
+            font-size: 180px;
             color: rgba(0, 0, 0, 0.05);
-            -webkit-text-stroke: 4px #cbd5e1;
-            font-weight: 900;
+            -webkit-text-stroke: 5px #cbd5e1;
+            font-weight: 400; /* Lighter weight = straighter lines */
             pointer-events: none;
+            letter-spacing: -2px;
         }
 
         .btn {
@@ -116,7 +117,7 @@
     </div>
 
     <button class="btn" id="checkBtn">Check ✅</button>
-    <button class="btn hidden" id="nextBtn">Next Level ➡️</button>
+    <button class="btn hidden" id="nextBtn" onclick="location.reload()">Next Level ➡️</button>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -145,36 +146,22 @@
 
         let count = 0;
         let isTracing = false;
-        let dotDiameter = 45;
 
         function initLevel() {
             area.innerHTML = '';
             count = Math.floor(Math.random() * 20) + 1; 
             traceTemplate.innerText = count;
-            dotDiameter = (count > 10) ? 38 : 50; // Sized for phone fingers
+            
+            const dotSize = (count > 10) ? 35 : 45;
 
-            const positions = [];
+            // Phase 1: Scatter the dots for initial counting
             for (let i = 0; i < count; i++) {
-                let pos;
-                let isTooClose = true;
-                let attempts = 0;
-
-                // SMART PLACEMENT: Check distance so they don't overlap
-                while(isTooClose && attempts < 50) {
-                    pos = { x: Math.random() * 80 + 10, y: Math.random() * 80 + 10 };
-                    isTooClose = positions.some(p => 
-                        Math.sqrt(Math.pow(p.x - pos.x, 2) + Math.pow(p.y - pos.y, 2)) < 15
-                    );
-                    attempts++;
-                }
-                positions.push(pos);
-
                 const dot = document.createElement('div');
                 dot.className = 'dot';
-                dot.style.width = dotDiameter + 'px';
-                dot.style.height = dotDiameter + 'px';
-                dot.style.left = pos.x + '%';
-                dot.style.top = pos.y + '%';
+                dot.style.width = dotSize + 'px';
+                dot.style.height = dotSize + 'px';
+                dot.style.left = (Math.random() * 75 + 10) + '%';
+                dot.style.top = (Math.random() * 75 + 10) + '%';
                 dot.onclick = () => dot.classList.toggle('counted');
                 area.appendChild(dot);
             }
@@ -182,49 +169,46 @@
 
         function rearrangeIntoGroups() {
             checkBtn.classList.add('hidden');
-            inst.innerText = "The animals moved! Still " + count + "?";
+            inst.innerText = "Still " + count + "! Now trace it. ✍️";
             
             const dots = Array.from(document.querySelectorAll('.dot'));
-            const groupSizes = [5, 3, 2];
-            let remaining = count;
-            let dotIndex = 0;
+            
+            // Phase 2: Snap into perfect static groups of 5, 3, 2
+            const groupSize = 5;
+            const dotSize = (count > 10) ? 30 : 40;
 
-            const clusters = [];
-            while (remaining > 0) {
-                let size = groupSizes.find(s => s <= remaining) || 1;
-                clusters.push(size);
-                remaining -= size;
-            }
-
-            clusters.forEach((size) => {
-                const centerX = (Math.random() * 70 + 15); 
-                const centerY = (Math.random() * 70 + 15);
-
-                for (let i = 0; i < size; i++) {
-                    const d = dots[dotIndex++];
-                    const offsetX = (i % 3) * 12;
-                    const offsetY = Math.floor(i / 3) * 12;
-                    d.style.left = (centerX + offsetX) + '%';
-                    d.style.top = (centerY + offsetY) + '%';
-                }
+            dots.forEach((d, i) => {
+                d.style.width = dotSize + 'px';
+                d.style.height = dotSize + 'px';
+                
+                // Grid logic for "Static Groups"
+                const groupIndex = Math.floor(i / groupSize);
+                const itemInGroup = i % groupSize;
+                
+                const col = itemInGroup % 3;
+                const row = Math.floor(itemInGroup / 3);
+                
+                const xPos = (groupIndex % 2) * 50 + (col * 12) + 10;
+                const yPos = Math.floor(groupIndex / 2) * 45 + (row * 12) + 15;
+                
+                d.style.left = xPos + '%';
+                d.style.top = yPos + '%';
             });
 
-            setTimeout(() => { showTracingMode(); }, 5000);
-        }
-
-        function showTracingMode() {
-            inst.innerText = "Trace the number " + count;
-            traceArea.style.display = 'flex';
-            canvas.width = traceArea.clientWidth;
-            canvas.height = traceArea.clientHeight;
-            setupTracing();
-            nextBtn.classList.remove('hidden');
-
-            addDoc(collection(db, "student_progress"), {
-                benchmark: "MA.K.NSO.1.1",
-                value: count,
-                timestamp: serverTimestamp()
-            });
+            // Show Tracing Area after a brief pause
+            setTimeout(() => {
+                traceArea.style.display = 'flex';
+                canvas.width = traceArea.clientWidth;
+                canvas.height = traceArea.clientHeight;
+                setupTracing();
+                nextBtn.classList.remove('hidden');
+                
+                addDoc(collection(db, "student_progress"), {
+                    benchmark: "MA.K.NSO.1.1",
+                    value: count,
+                    timestamp: serverTimestamp()
+                });
+            }, 1500);
         }
 
         function setupTracing() {
@@ -248,7 +232,6 @@
         }
 
         checkBtn.onclick = rearrangeIntoGroups;
-        nextBtn.onclick = () => location.reload();
         window.onload = initLevel;
     </script>
 </body>
