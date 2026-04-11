@@ -51,12 +51,11 @@
             flex: 1; 
             position: relative; 
             width: 100%;
-            transition: all 0.8s ease;
             background: #fafafa;
         }
 
         #trace-area {
-            flex: 1.5; /* More space for tracing */
+            flex: 1.5;
             display: none; 
             position: relative;
             background: #ffffff;
@@ -77,13 +76,13 @@
 
         #trace-canvas { position: absolute; top: 0; left: 0; z-index: 25; }
 
-        /* THE CLEANEST NUMERALS POSSIBLE */
+        /* PEDAGOGICAL FONT: Cleanest vertical 1 and hook-free 5 */
         .trace-prompt {
-            font-family: Arial, Helvetica, sans-serif; /* Cleanest system font for 1 and 5 */
+            font-family: Arial, Helvetica, sans-serif;
             font-size: 180px;
             color: rgba(0, 0, 0, 0.05);
             -webkit-text-stroke: 5px #cbd5e1;
-            font-weight: 400; /* Lighter weight = straighter lines */
+            font-weight: 400;
             pointer-events: none;
             letter-spacing: -2px;
         }
@@ -119,22 +118,7 @@
     <button class="btn" id="checkBtn">Check ✅</button>
     <button class="btn hidden" id="nextBtn" onclick="location.reload()">Next Level ➡️</button>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDP9TrLurt53v4dFAdCc60h0Dszitbym3w",
-            authDomain: "sample-deals-app.firebaseapp.com",
-            projectId: "sample-deals-app",
-            storageBucket: "sample-deals-app.firebasestorage.app",
-            messagingSenderId: "926143400812",
-            appId: "1:926143400812:web:7aa6083d269e4298424149"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
+    <script>
         const area = document.getElementById('object-area');
         const traceArea = document.getElementById('trace-area');
         const inst = document.getElementById('inst');
@@ -154,7 +138,7 @@
             
             const dotSize = (count > 10) ? 35 : 45;
 
-            // Phase 1: Scatter the dots for initial counting
+            // Phase 1: Scatter the dots
             for (let i = 0; i < count; i++) {
                 const dot = document.createElement('div');
                 dot.className = 'dot';
@@ -172,8 +156,6 @@
             inst.innerText = "Still " + count + "! Now trace it. ✍️";
             
             const dots = Array.from(document.querySelectorAll('.dot'));
-            
-            // Phase 2: Snap into perfect static groups of 5, 3, 2
             const groupSize = 5;
             const dotSize = (count > 10) ? 30 : 40;
 
@@ -181,10 +163,8 @@
                 d.style.width = dotSize + 'px';
                 d.style.height = dotSize + 'px';
                 
-                // Grid logic for "Static Groups"
                 const groupIndex = Math.floor(i / groupSize);
                 const itemInGroup = i % groupSize;
-                
                 const col = itemInGroup % 3;
                 const row = Math.floor(itemInGroup / 3);
                 
@@ -195,20 +175,14 @@
                 d.style.top = yPos + '%';
             });
 
-            // Show Tracing Area after a brief pause
+            // Pedagogical 5-second processing pause
             setTimeout(() => {
                 traceArea.style.display = 'flex';
                 canvas.width = traceArea.clientWidth;
                 canvas.height = traceArea.clientHeight;
                 setupTracing();
                 nextBtn.classList.remove('hidden');
-                
-                addDoc(collection(db, "student_progress"), {
-                    benchmark: "MA.K.NSO.1.1",
-                    value: count,
-                    timestamp: serverTimestamp()
-                });
-            }, 1500);
+            }, 5000);
         }
 
         function setupTracing() {
