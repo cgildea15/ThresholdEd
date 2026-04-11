@@ -2,227 +2,178 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Counting Zoo v2.0 | ThresholdEd</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThresholdEd | Colleen Gildea</title>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
-        body {
-            font-family: 'Lexend', sans-serif;
-            background-color: #f0f9ff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 10px;
-            touch-action: none;
-            overflow: hidden;
+        :root {
+            --bg-color: #f0f4f8;
+            --text-color: #2c3e50;
+            --container-bg: #ffffff;
+            --primary-blue: #2563eb;
+            --accent-blue: #1a5276;
         }
 
-        .zoo-header { font-size: 2.2rem; margin: 5px 0; }
-
-        .instructions {
-            background: #ffffff;
-            padding: 12px;
-            border-radius: 20px;
-            margin-bottom: 10px;
-            text-align: center;
-            font-size: 1.1rem;
-            width: 90%;
-            max-width: 450px;
-            border: 4px solid #3b82f6;
-            font-weight: 700;
+        body.high-contrast {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --container-bg: #1a1a1a;
+            --primary-blue: #ffff00;
+            --accent-blue: #00ff00;
         }
 
-        /* 1. TALL BOX FIX: Explicitly forcing the vertical height for Samsung */
-        .card-container {
-            width: 95%;
-            max-width: 400px;
-            height: 70vh; /* Using Viewport Height to ensure it fills the phone screen */
-            position: relative;
-            background: white;
-            border: 8px solid #3b82f6;
-            border-radius: 30px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
+        body { 
+            font-family: 'Lexend', sans-serif; 
+            line-height: 1.6; 
+            max-width: 850px; 
+            margin: 40px auto; 
+            padding: 0 20px; 
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
+            transition: all 0.3s ease;
         }
 
-        #object-area { 
-            flex: 1; 
-            position: relative; 
-            width: 100%;
-            background: #fafafa;
+        header { text-align: left; margin-bottom: 40px; }
+        h1 { color: var(--accent-blue); margin-bottom: 0.5rem; font-size: 2.5rem; }
+        h2 { color: #2980b9; border-bottom: 2px solid #d1d5db; padding-bottom: 5px; margin-top: 30px; }
+        
+        .tagline { color: #2980b9; font-weight: bold; font-size: 1.2rem; display: block; margin-bottom: 10px; }
+        .container-box { 
+            margin-top: 20px; 
+            padding: 25px; 
+            background: var(--container-bg); 
+            border-radius: 15px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
+            border: 1px solid transparent;
         }
 
-        #trace-area {
-            flex: 1.2;
-            display: none; 
-            position: relative;
-            background: #ffffff;
-            align-items: center;
-            justify-content: center;
-            border-top: 4px dashed #cbd5e1;
-        }
-
-        .dot {
-            background-color: #22c55e;
-            border: 4px solid #14532d;
-            border-radius: 50%;
-            position: absolute;
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 10;
-        }
-        .dot.counted { background-color: #3b82f6; border-color: #1e3a8a; }
-
-        #trace-canvas { position: absolute; top: 0; left: 0; z-index: 25; }
-
-        .trace-prompt {
-            font-family: "Trebuchet MS", "Verdana", Arial, sans-serif;
-            font-size: 180px;
-            color: rgba(0, 0, 0, 0.05);
-            -webkit-text-stroke: 4px #cbd5e1;
-            font-weight: 400;
-            pointer-events: none;
-            font-variant-numeric: lining-nums;
-        }
+        body.high-contrast .container-box { border: 2px solid #ffffff; }
 
         .btn {
-            margin-top: 15px;
-            padding: 15px 40px;
-            font-size: 1.4rem;
+            display: inline-block;
+            background-color: var(--primary-blue);
+            color: white !important;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 10px;
             font-weight: 700;
-            background: #2563eb;
-            color: white;
-            border-radius: 20px;
-            border: none;
-            box-shadow: 0 5px 0 #1d4ed8;
+            margin-top: 15px;
+            transition: transform 0.2s ease;
             cursor: pointer;
+            border: none;
         }
-        .hidden { display: none !important; }
+        
+        body.high-contrast .btn { color: black !important; }
+        .btn:hover { transform: translateY(-2px); }
+
+        .standards-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 20px; }
+        .standard-item { 
+            border-left: 5px solid var(--primary-blue); 
+            padding: 15px; 
+            background: rgba(37, 99, 235, 0.05); 
+            border-radius: 0 10px 10px 0; 
+        }
+
+        .standard-code { font-weight: bold; color: var(--accent-blue); }
+        .accessibility-bar { text-align: right; margin-bottom: 20px; }
+        
+        ul li { margin-bottom: 10px; }
+        a { color: var(--primary-blue); text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
 
-    <div class="zoo-header">🦁🐯🐘🦛</div>
-    <div class="instructions" id="inst">Tap the dots to count! 🦁</div>
-
-    <div class="card-container">
-        <div id="object-area"></div>
-        <div id="trace-area">
-            <div id="trace-template" class="trace-prompt">0</div>
-            <canvas id="trace-canvas"></canvas>
-        </div>
+    <div class="accessibility-bar">
+        <button class="btn" onclick="toggleContrast()" aria-label="Toggle High Contrast Mode">
+            Toggle High Contrast 🌓
+        </button>
     </div>
 
-    <button class="btn" id="checkBtn">Check ✅</button>
-    <button class="btn hidden" id="nextBtn" onclick="location.reload()">Next Level ➡️</button>
+    <header>
+        <h1>ThresholdEd</h1>
+        <span class="tagline">Bridging the Gap Between Curiosity and Capability</span>
+        <p><strong>Colleen Gildea</strong> | Certified Elementary Teacher (K-6) | Applied AI Specialist</p>
+        <p>Welcome! I am a former Title I STEM educator and current Applied AI student at Palm Beach State College.</p>
+    </header>
 
-    <script>
-        const area = document.getElementById('object-area');
-        const traceArea = document.getElementById('trace-area');
-        const inst = document.getElementById('inst');
-        const checkBtn = document.getElementById('checkBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const traceTemplate = document.getElementById('trace-template');
-        const canvas = document.getElementById('trace-canvas');
-        const ctx = canvas.getContext('2d');
+    <section class="container-box">
+        <h2>The Philosophy: Algorithmic Bandwidth</h2>
+        <p>Optimizing the <strong>Zone of Proximal Development (ZPD)</strong> through adaptive systems. ThresholdEd converts the ZPD into a dynamic bandwidth to keep every student at their individual upper boundary—the "Sweet Spot" of learning.</p>
+        <ul>
+            <li><strong>Adaptive Learning:</strong> Skill-based mastery adjusted to the ZPD.</li>
+            <li><strong>Data-Driven Success:</strong> Technology-enhanced data collection to automate meaningful practice.</li>
+            <li><strong>Linguistic Equity:</strong> Assessing developmental readiness, not just language proficiency.</li>
+            <li><strong>AI-Automated Scaffolding:</strong> Reducing mental load to encourage skill automatization.</li>
+        </ul>
+    </section>
 
-        let count = 0;
-        let isTracing = false;
+    <section class="container-box">
+        <h2>Interactive Tools</h2>
+        <p><strong>Counting Zoo 🦁</strong><br>
+        A Florida B.E.S.T. Standards-aligned tool for Kindergarten math. Focuses on cardinality, one-to-one correspondence, and the principle of rearrangement.</p>
+        <a href="https://cgildea15.github.io/counting-zoo" class="btn">Play Counting Zoo →</a>
+    </section>
 
-        function initLevel() {
-            area.innerHTML = '';
-            count = Math.floor(Math.random() * 20) + 1; 
-            traceTemplate.innerText = count;
-            
-            // Smaller dots for 10+ to ensure they have room to breathe
-            const dotSize = (count > 10) ? 32 : 48;
+    <section class="container-box">
+        <h2>Live Standards Tracking</h2>
+        <p>Direct integration of Florida B.E.S.T. Standards from Firestore:</p>
+        <div id="standards-list" class="standards-grid">
+            <p>Connecting to database...</p>
+        </div>
+    </section>
 
-            const positions = [];
-            // Attempt 200 times to find a unique, far-away spot for every dot
-            for (let i = 0; i < count; i++) {
-                let pos;
-                let isTooClose = true;
-                let attempts = 0;
+    <section class="container-box">
+        <h2>Connect with my Work</h2>
+        <p>📝 <strong>Read my Blog:</strong> <a href="https://thresholded.beehiiv.com">ThresholdEd on beehiiv</a></p>
+        <p>💻 <strong>GitHub:</strong> <a href="https://github.com/cgildea15">cgildea15</a></p>
+    </section>
 
-                while(isTooClose && attempts < 200) {
-                    pos = { x: Math.random() * 80 + 10, y: Math.random() * 80 + 10 };
-                    isTooClose = positions.some(p => 
-                        Math.sqrt(Math.pow(p.x - pos.x, 2) + Math.pow(p.y - pos.y, 2)) < 16
-                    );
-                    attempts++;
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDP9TrLurt53v4dFAdCc60h0Dszitbym3w",
+            authDomain: "sample-deals-app.firebaseapp.com",
+            projectId: "sample-deals-app",
+            storageBucket: "sample-deals-app.firebasestorage.app",
+            messagingSenderId: "926143400812",
+            appId: "1:926143400812:web:7aa6083d269e4298424149"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function fetchStandards() {
+            const container = document.getElementById('standards-list');
+            try {
+                const snapshot = await getDocs(collection(db, "academic_standards"));
+                container.innerHTML = "";
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    container.innerHTML += `
+                        <div class="standard-item">
+                            <span class="standard-code">${doc.id}</span>
+                            <p>${data.summary || 'No description available.'}</p>
+                        </div>
+                    `;
+                });
+                if (container.innerHTML === "") {
+                    container.innerHTML = "<p>No standards found in database.</p>";
                 }
-                positions.push(pos);
-
-                const dot = document.createElement('div');
-                dot.className = 'dot';
-                dot.style.width = dotSize + 'px';
-                dot.style.height = dotSize + 'px';
-                dot.style.left = pos.x + '%';
-                dot.style.top = pos.y + '%';
-                dot.onclick = () => dot.classList.toggle('counted');
-                area.appendChild(dot);
+            } catch (e) {
+                console.error(e);
+                container.innerHTML = "<p>Database connection is currently offline.</p>";
             }
         }
 
-        function rearrangeIntoGroups() {
-            checkBtn.classList.add('hidden');
-            inst.innerText = "Still " + count + "! Now trace it. ✍️";
-            
-            const dots = Array.from(document.querySelectorAll('.dot'));
-            const groupSize = 5;
-            const dotSize = (count > 10) ? 28 : 40;
-
-            dots.forEach((d, i) => {
-                d.style.width = dotSize + 'px';
-                d.style.height = dotSize + 'px';
-                
-                const groupIndex = Math.floor(i / groupSize);
-                const itemInGroup = i % groupSize;
-                const col = itemInGroup % 3;
-                const row = Math.floor(itemInGroup / 3);
-                
-                // Clusters at the top half of the screen
-                const xPos = (groupIndex % 2) * 45 + (col * 10) + 15;
-                const yPos = Math.floor(groupIndex / 2) * 20 + (row * 6) + 5;
-                
-                d.style.left = xPos + '%';
-                d.style.top = yPos + '%';
-            });
-
-            setTimeout(() => {
-                traceArea.style.display = 'flex';
-                canvas.width = traceArea.clientWidth;
-                canvas.height = traceArea.clientHeight;
-                setupTracing();
-                nextBtn.classList.remove('hidden');
-            }, 5000);
+        window.toggleContrast = function() {
+            document.body.classList.toggle('high-contrast');
         }
 
-        function setupTracing() {
-            ctx.strokeStyle = '#2563eb';
-            ctx.lineWidth = 14;
-            ctx.lineCap = 'round';
-            const getPos = (e) => {
-                const rect = canvas.getBoundingClientRect();
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                return { x: clientX - rect.left, y: clientY - rect.top };
-            };
-            canvas.onmousedown = canvas.ontouchstart = (e) => { 
-                e.preventDefault(); isTracing = true; ctx.beginPath(); 
-                const p = getPos(e); ctx.moveTo(p.x, p.y); 
-            };
-            window.onmousemove = window.ontouchmove = (e) => { 
-                if(!isTracing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); 
-            };
-            window.onmouseup = window.ontouchend = () => { isTracing = false; };
-        }
-
-        checkBtn.onclick = rearrangeIntoGroups;
-        window.onload = initLevel;
+        fetchStandards();
     </script>
 </body>
 </html>
